@@ -245,12 +245,11 @@ function AddExperienceForm({ onAdded }) {
 export default function CVPage() {
   const [cv, setCV]         = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState('');
 
   const loadCV = useCallback(() => {
     api.get('/student/cv/')
       .then(({ data }) => setCV(data))
-      .catch(() => setError('Failed to load your CV.'))
+      .catch(() => setCV({ experiences: [] }))
       .finally(() => setLoading(false));
   }, []);
 
@@ -283,7 +282,6 @@ export default function CVPage() {
   }
 
   if (loading) return <p className="empty-state">Loading your CV…</p>;
-  if (error)   return <p className="error-message">{error}</p>;
 
   return (
     <div className="db-page">
