@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { path: '/student/progress', label: 'Progress', icon: '' },
   { path: '/student/appointments', label: 'Book Appointment', icon: '' },
   { path: '/student/add-question', label: 'Add Question', icon: '' },
+  { path: '/student/alumni', label: 'Alumni', icon: '' },
 ];
 
 export default function Sidebar() {

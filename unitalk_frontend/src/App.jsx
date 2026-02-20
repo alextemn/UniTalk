@@ -10,6 +10,7 @@ import FeedbackHistoryPage from './pages/student/FeedbackHistoryPage.jsx';
 import ProgressPage from './pages/student/ProgressPage.jsx';
 import AppointmentsPage from './pages/student/AppointmentsPage.jsx';
 import AddQuestionPage from './pages/student/AddQuestionPage.jsx';
+import AlumniPage from './pages/student/AlumniPage.jsx';
 
 function AuthGuard({ children }) {
   const { user, loading } = useAuth();
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="progress" element={<ProgressPage />} />
           <Route path="appointments" element={<AppointmentsPage />} />
           <Route path="add-question" element={<AddQuestionPage />} />
+          <Route path="alumni" element={<AlumniPage />} />
         </Route>
         <Route
           path="/faculty"
