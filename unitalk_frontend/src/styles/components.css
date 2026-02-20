@@ -1,0 +1,669 @@
+.card-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-category {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.badge-subcategory {
+  background: #E0E7FF;
+  color: #4338CA;
+}
+
+/* ── Question filter bar ─────────────────────────────────────── */
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.filter-group {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.filter-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.filter-btn.subcategory.active {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #fff;
+}
+
+.badge-easy {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.badge-medium {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.badge-hard {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.question-detail {
+  max-width: 700px;
+}
+
+.question-detail h2 {
+  margin-bottom: 1rem;
+}
+
+.question-detail .question-text {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.answer-form textarea {
+  resize: vertical;
+  min-height: 140px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.answer-form .actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.evaluation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .evaluation {
+    grid-template-columns: 1fr;
+  }
+}
+
+.eval-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.eval-col h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.eval-col.strengths h4 {
+  color: #166534;
+}
+
+.eval-col.weaknesses h4 {
+  color: #991b1b;
+}
+
+.eval-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.eval-col ul li {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  padding: 0.375rem 0.5rem;
+  border-radius: 4px;
+}
+
+.eval-col.strengths ul li {
+  background: #f0fdf4;
+  color: #14532d;
+}
+
+.eval-col.weaknesses ul li {
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+.eval-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 700px;
+}
+
+.progress-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.progress-card .question-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.progress-card .question-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.progress-card .answer-text {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  font-style: italic;
+  border-left: 3px solid var(--border);
+  padding-left: 0.5rem;
+}
+
+.progress-card .date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+.book-form {
+  max-width: 480px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.book-form h2 {
+  margin-bottom: 1.25rem;
+}
+
+.book-success {
+  color: var(--success);
+  font-weight: 500;
+  margin-top: 0.75rem;
+}
+
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 700px;
+}
+
+.appointment-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.appointment-card .appt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.appointment-card .student-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.status-badge {
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-confirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.appointment-card .appt-time {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.appointment-card .appt-notes {
+  font-size: 0.875rem;
+  color: var(--text);
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  background: var(--bg);
+  border-radius: 4px;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  padding: 2rem 0;
+}
+
+/* ── Score badge ─────────────────────────────────────────────── */
+
+.score-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.score-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border-width: 3px;
+  border-style: solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.score-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-denom {
+  font-size: 0.65rem;
+  opacity: 0.65;
+  font-weight: 500;
+}
+
+.score-green { border-color: var(--success); color: var(--success); }
+.score-blue  { border-color: #3b82f6;        color: #3b82f6; }
+.score-orange{ border-color: var(--warning);  color: var(--warning); }
+.score-red   { border-color: var(--danger);   color: var(--danger); }
+
+.score-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.score-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.375rem;
+}
+
+.score-bar-track {
+  height: 7px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.375rem;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.9s ease;
+}
+
+.score-fill-green  { background: var(--success); }
+.score-fill-blue   { background: #3b82f6; }
+.score-fill-orange { background: var(--warning); }
+.score-fill-red    { background: var(--danger); }
+
+.score-rubric {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* compact score chip used inside progress/faculty cards */
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.score-chip.score-green  { background: #dcfce7; color: #166534; }
+.score-chip.score-blue   { background: #dbeafe; color: #1e40af; }
+.score-chip.score-orange { background: #fef3c7; color: #92400e; }
+.score-chip.score-red    { background: #fee2e2; color: #991b1b; }
+
+/* ── Faculty appointment actions ────────────────────────────── */
+
+.student-name-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.student-name-btn:hover {
+  color: var(--primary-hover);
+}
+
+.appt-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.btn-accept {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.875rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.btn-accept:hover:not(:disabled) {
+  background: var(--success);
+  color: #fff;
+  border-color: var(--success);
+}
+
+.btn-decline {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.875rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.btn-decline:hover:not(:disabled) {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.panel-back-btn {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.75rem;
+  flex-shrink: 0;
+}
+
+.faculty-student-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.8fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+
+.summary-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.summary-score {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.summary-caption {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.summary-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.summary-list li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.summary-area-name {
+  font-weight: 500;
+  color: #1E293B;
+}
+
+.summary-area-score {
+  color: var(--text-muted);
+}
+
+/* ── Voice recorder ─────────────────────────────────────────── */
+
+.recorder-container {
+  display: none;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  align-items: flex-start;
+}
+
+.recorder-container.visible {
+  display: flex;
+}
+
+.recorder-video {
+  width: 280px;
+  flex-shrink: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  border: 2px solid var(--danger);
+  background: #000;
+  object-fit: cover;
+  /* Mirror so it feels like looking in a mirror */
+  transform: scaleX(-1);
+}
+
+.recorder-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.recording-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--danger);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rec-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: rec-pulse 1.1s ease-in-out infinite;
+}
+
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.25; transform: scale(0.8); }
+}
+
+.live-transcript {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  min-height: 52px;
+}
+
+.interim-text {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Record / Stop inline buttons beside the label */
+.label-with-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.btn-record {
+  background: #fee2e2;
+  color: var(--danger);
+  border: 1px solid #fca5a5;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.625rem;
+  border-radius: var(--radius);
+}
+
+.btn-record:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-stop {
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.625rem;
+  border-radius: var(--radius);
+  animation: rec-pulse 1.1s ease-in-out infinite;
+}
+
+.recorder-controls {
+  margin-bottom: 1rem;
+}
+
+.btn-record-large {
+  background: #fee2e2;
+  color: var(--danger);
+  border: 2px solid #fca5a5;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.625rem 1.5rem;
+  border-radius: var(--radius);
+}
+
+.btn-record-large:hover {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+
+.btn-stop-large {
+  background: var(--danger);
+  color: #fff;
+  border: 2px solid var(--danger);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.625rem 1.5rem;
+  border-radius: var(--radius);
+  animation: rec-pulse 1.1s ease-in-out infinite;
+}
+
+@media (max-width: 600px) {
+  .recorder-container.visible {
+    flex-direction: column;
+  }
+  .recorder-video {
+    width: 100%;
+  }
+}

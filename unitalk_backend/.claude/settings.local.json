@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip3 show:*)",
+      "Bash(pip3 list:*)",
+      "Bash(python3:*)",
+      "Bash(# Check if there''s a virtual environment anywhere nearby find /Users/alextemnorod/Desktop/UniTalk -name \"\"pyvenv.cfg\"\" -o -name \"\"activate\"\")",
+      "Bash(pip install:*)",
+      "Bash(pip freeze:*)",
+      "Bash(python manage.py makemigrations:*)",
+      "Bash(python manage.py migrate:*)",
+      "Bash(python manage.py check:*)",
+      "Bash(npm create vite@latest unitalk_frontend -- --template react)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm run build)",
+      "Bash(python -c:*)",
+      "Bash(kill:*)",
+      "Bash(python manage.py showmigrations:*)",
+      "Bash(cd:*)",
+      "Bash(python manage.py:*)",
+      "Bash(nslookup:*)",
+      "Bash(python -:*)"
+    ]
+  }
+}

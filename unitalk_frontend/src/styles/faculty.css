@@ -1,0 +1,537 @@
+/* ── Faculty dashboard shell ─────────────────────────────────── */
+.fac-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.fac-header {
+  margin-bottom: 2rem;
+}
+
+.fac-header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 0.25rem;
+}
+
+.fac-subtitle {
+  font-size: 0.95rem;
+  color: #64748B;
+}
+
+/* ── Stats row ───────────────────────────────────────────────── */
+.fac-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.fac-stat-card {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.fac-stat-card.fac-stat-alert {
+  border-color: #FCD34D;
+  background: #FFFBEB;
+}
+
+.fac-stat-num {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1E293B;
+  line-height: 1;
+}
+
+.fac-stat-alert .fac-stat-num {
+  color: #92400E;
+}
+
+.fac-stat-lbl {
+  font-size: 0.8rem;
+  color: #64748B;
+  margin-top: 0.15rem;
+}
+
+/* ── Body: 2-column grid ─────────────────────────────────────── */
+.fac-body {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ── Shared card ─────────────────────────────────────────────── */
+.fac-card {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 1.75rem;
+}
+
+.fac-card-header {
+  margin-bottom: 1.5rem;
+}
+
+.fac-card-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 0.2rem;
+}
+
+.fac-card-sub {
+  font-size: 0.8rem;
+  color: #94A3B8;
+}
+
+.fac-empty {
+  font-size: 0.875rem;
+  color: #94A3B8;
+  padding: 1rem 0;
+}
+
+/* ── Score chart ─────────────────────────────────────────────── */
+.fac-chart-section {
+  margin-bottom: 1.75rem;
+}
+
+.fac-chart-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.fac-chart-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #94A3B8;
+  margin-bottom: 0.875rem;
+}
+
+.fac-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.fac-bar-row:last-child {
+  margin-bottom: 0;
+}
+
+.fac-bar-label {
+  width: 140px;
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1E293B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fac-bar-track {
+  flex: 1;
+  height: 10px;
+  background: #F1F5F9;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fac-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fac-bar-score {
+  width: 32px;
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1E293B;
+  flex-shrink: 0;
+}
+
+.fac-bar-count {
+  width: 52px;
+  font-size: 0.75rem;
+  color: #94A3B8;
+  flex-shrink: 0;
+}
+
+.fac-chart-note {
+  font-size: 0.72rem;
+  color: #CBD5E1;
+  margin-top: 1.5rem;
+  line-height: 1.5;
+}
+
+/* ── Appointment cards ───────────────────────────────────────── */
+.fac-appt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.fac-appt-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 1rem 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.fac-appt-card.fac-appt-pending {
+  border-color: #FCD34D;
+  background: #FFFBEB;
+}
+
+.fac-appt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fac-appt-student {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1E293B;
+}
+
+.fac-appt-time {
+  font-size: 0.8rem;
+  color: #64748B;
+}
+
+.fac-appt-notes {
+  font-size: 0.8rem;
+  color: #475569;
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+.fac-appt-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.fac-btn-accept {
+  background: #D1FAE5;
+  color: #065F46;
+  border: 1px solid #6EE7B7;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.875rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fac-btn-accept:hover:not(:disabled) {
+  background: #10B981;
+  color: #fff;
+  border-color: #10B981;
+}
+
+.fac-btn-decline {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.875rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fac-btn-decline:hover:not(:disabled) {
+  background: #EF4444;
+  color: #fff;
+  border-color: #EF4444;
+}
+
+/* Status badges (reused from components.css but scoped here) */
+.fac-status {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.fac-status.pending   { background: #FEF3C7; color: #92400E; }
+.fac-status.confirmed { background: #D1FAE5; color: #065F46; }
+.fac-status.cancelled { background: #FEE2E2; color: #991B1B; }
+
+/* ── Clickable appointment card ──────────────────────────────── */
+.fac-appt-clickable {
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.fac-appt-clickable:hover {
+  border-color: #94A3B8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.fac-appt-cta {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+/* ── Student detail view ─────────────────────────────────────── */
+.fac-back-btn {
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  transition: color 0.15s;
+}
+
+.fac-back-btn:hover {
+  color: #1E293B;
+}
+
+.fac-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.fac-detail-student {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 0.2rem;
+}
+
+.fac-detail-notes {
+  font-size: 0.875rem;
+  color: #475569;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1rem;
+  background: #F8FAFC;
+  border-left: 3px solid #CBD5E1;
+  border-radius: 0 6px 6px 0;
+}
+
+.fac-detail-actions {
+  margin-bottom: 1.5rem;
+}
+
+/* ── Filters row ─────────────────────────────────────────────── */
+.fac-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.fac-filter-select {
+  padding: 0.45rem 0.875rem;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: #ffffff;
+  color: #1E293B;
+  cursor: pointer;
+  min-width: 170px;
+}
+
+.fac-filter-select:focus {
+  outline: none;
+  border-color: #94A3B8;
+}
+
+.fac-filter-count {
+  font-size: 0.8rem;
+  color: #94A3B8;
+  margin-left: auto;
+}
+
+/* ── Answer list ─────────────────────────────────────────────── */
+.fac-answer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fac-answer-card {
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.fac-answer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.fac-answer-badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.fac-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.fac-badge-cat {
+  background: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.fac-badge-subcat {
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.fac-answer-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.fac-answer-date {
+  font-size: 0.78rem;
+  color: #94A3B8;
+}
+
+.fac-answer-score-badge {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.fac-answer-score-badge span {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #94A3B8;
+}
+
+.fac-answer-question {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.fac-answer-text {
+  font-size: 0.875rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.fac-answer-feedback {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.fac-feedback-col {
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.fac-feedback-strengths {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+}
+
+.fac-feedback-weaknesses {
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+}
+
+.fac-feedback-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.3rem;
+}
+
+.fac-feedback-strengths .fac-feedback-label { color: #15803D; }
+.fac-feedback-weaknesses .fac-feedback-label { color: #BE123C; }
+
+.fac-feedback-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.fac-feedback-list li {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #374151;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.fac-feedback-strengths .fac-feedback-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #15803D;
+  font-weight: 700;
+}
+
+.fac-feedback-weaknesses .fac-feedback-list li::before {
+  content: '✕';
+  position: absolute;
+  left: 0;
+  color: #BE123C;
+  font-weight: 700;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .fac-body {
+    grid-template-columns: 1fr;
+  }
+
+  .fac-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

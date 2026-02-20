@@ -1,0 +1,34 @@
+from django.urls import path
+from .views import (
+    QuestionListView,
+    QuestionDetailView,
+    SubmitAnswerView,
+    RegisterView,
+    StudentAnswerListView,
+    FacultyAppointmentListView,
+    AppointmentCreateView,
+    FacultyListView,
+    AppointmentStatusUpdateView,
+    FacultyStudentAnswersView,
+    PerformanceOverTimeView,
+    PerformanceByCategoryView,
+    PerformanceBySubcategoryView,
+    FacultyAnalyticsView,
+)
+
+urlpatterns = [
+    path('questions/', QuestionListView.as_view()),
+    path('questions/<int:pk>/', QuestionDetailView.as_view()),
+    path('questions/<int:pk>/submit-answer/', SubmitAnswerView.as_view()),
+    path('register/', RegisterView.as_view()),
+    path('student/answers/', StudentAnswerListView.as_view()),
+    path('student/performance/over-time/', PerformanceOverTimeView.as_view()),
+    path('student/performance/by-category/', PerformanceByCategoryView.as_view()),
+    path('student/performance/by-subcategory/', PerformanceBySubcategoryView.as_view()),
+    path('faculty/', FacultyListView.as_view()),
+    path('faculty/analytics/', FacultyAnalyticsView.as_view()),
+    path('faculty/appointments/', FacultyAppointmentListView.as_view()),
+    path('faculty/student/<int:student_id>/answers/', FacultyStudentAnswersView.as_view()),
+    path('appointments/', AppointmentCreateView.as_view()),
+    path('appointments/<int:pk>/status/', AppointmentStatusUpdateView.as_view()),
+]

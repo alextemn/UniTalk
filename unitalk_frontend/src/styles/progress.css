@@ -1,0 +1,371 @@
+.progress-page {
+  max-width: 1400px;
+}
+
+.progress-page h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 1.5rem;
+}
+
+.performance-filters {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin: 0;
+}
+
+.filter-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background: #ffffff;
+  color: #1E293B;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #1E2B4B;
+  box-shadow: 0 0 0 3px rgba(30, 43, 75, 0.1);
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+  min-height: 800px;
+}
+
+.progress-widget {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-widget h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin-bottom: 1.25rem;
+}
+
+.progress-widget.performance-trend-full {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.progress-widget.weekly-goal {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}
+
+/* Performance Trend Chart */
+.trend-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.performance-chart {
+  display: flex;
+  height: 300px;
+}
+
+.chart-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 0.75rem;
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+.chart-content {
+  flex: 1;
+  position: relative;
+  min-height: 200px;
+}
+
+.line-chart {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #64748B;
+  font-size: 0.875rem;
+}
+
+.chart-x-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+/* Skills Assessment */
+.skills-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skill-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skill-label {
+  width: 100px;
+  font-size: 0.875rem;
+  color: #1E293B;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.skill-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skill-bar {
+  flex: none;
+  height: 24px;
+  background: #FCD34D;
+  border-radius: 4px;
+  min-width: 20px;
+  max-width: calc(100% - 52px);
+}
+
+.skill-score {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1E293B;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Questions by Category */
+.category-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.category-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-label {
+  width: 100px;
+  font-size: 0.875rem;
+  color: #1E293B;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.category-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.category-bar {
+  flex: none;
+  height: 24px;
+  background: #1E2B4B;
+  border-radius: 4px;
+  min-width: 20px;
+  max-width: calc(100% - 52px);
+}
+
+.category-count {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1E293B;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* By Difficulty */
+.difficulty-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.difficulty-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.difficulty-label {
+  width: 100px;
+  font-size: 0.875rem;
+  color: #1E293B;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.difficulty-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.difficulty-bar {
+  flex: none;
+  height: 24px;
+  background: #FCD34D;
+  border-radius: 4px;
+  min-width: 20px;
+  max-width: calc(100% - 52px);
+}
+
+.difficulty-count {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1E293B;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Practice Streak Heatmap */
+.streak-heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.streak-day {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background: #E2E8F0;
+}
+
+.streak-day.intensity-0 {
+  background: #E2E8F0;
+}
+
+.streak-day.intensity-1 {
+  background: #FEF3C7;
+}
+
+.streak-day.intensity-2 {
+  background: #FDE68A;
+}
+
+.streak-day.intensity-3 {
+  background: #FCD34D;
+}
+
+.streak-day.intensity-4 {
+  background: #F59E0B;
+}
+
+.streak-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: #64748B;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-dot.less {
+  background: #FEF3C7;
+}
+
+.legend-dot.more {
+  background: #F59E0B;
+}
+
+/* Weekly Goal */
+.weekly-goal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.goal-text {
+  font-size: 1rem;
+  color: #1E293B;
+  font-weight: 500;
+}
+
+.goal-progress-bar {
+  height: 32px;
+  background: #E2E8F0;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.goal-progress-fill {
+  height: 100%;
+  background: #FCD34D;
+  border-radius: 16px;
+  transition: width 0.3s;
+}
+
+.goal-progress-text {
+  font-size: 0.875rem;
+  color: #64748B;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .progress-grid {
+    grid-template-columns: 1fr;
+  }
+}
