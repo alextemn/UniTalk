@@ -160,48 +160,21 @@ function AnswerCard({ ans }) {
   );
 }
 
-function StudentCVView({ studentId }) {
-  const [cv, setCv]     = useState(undefined);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    api.get(`/faculty/student/${studentId}/cv/`)
-      .then(({ data }) => setCv(data))
-      .catch(() => setCv(null));
-  }, [studentId]);
-
-  async function handleView() {
-    setError('');
-    try {
-      const res = await api.get(`/faculty/student/${studentId}/cv/pdf/`, { responseType: 'blob' });
-      const url = URL.createObjectURL(res.data);
-      window.open(url, '_blank');
-    } catch {
-      setError('Failed to open PDF.');
-    }
-  }
-
-  if (cv === undefined) return <p className="fac-empty">Loading CV…</p>;
-  if (!cv) return <p className="fac-empty">This student hasn't uploaded a CV yet.</p>;
-
+function StudentCVView() {
   return (
     <div style={{ marginTop: '1rem' }}>
       <div className="cv-uploaded-card">
         <div className="cv-uploaded-info">
           <span className="cv-file-icon">PDF</span>
           <div>
-            <p className="cv-uploaded-name">{cv.filename}</p>
-            <p className="cv-uploaded-date">
-              Uploaded {new Date(cv.uploaded_at).toLocaleDateString('en-US', {
-                month: 'long', day: 'numeric', year: 'numeric',
-              })}
-            </p>
+            <p className="cv-uploaded-name">Temnorod Resume.pdf</p>
           </div>
         </div>
         <div className="cv-uploaded-actions">
-          <button className="btn-primary" onClick={handleView}>View PDF</button>
+          <a className="btn-primary" href="/resume.pdf" target="_blank" rel="noreferrer">
+            View PDF
+          </a>
         </div>
-        {error && <p className="fac-empty" style={{ marginTop: '0.5rem' }}>{error}</p>}
       </div>
     </div>
   );
