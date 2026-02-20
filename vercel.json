@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd unitalk_frontend && npm install && npm run build",
-  "outputDirectory": "unitalk_frontend/dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}

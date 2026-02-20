@@ -169,4 +169,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://uni-talk-tau.vercel.app',
 ]
 
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https://.*\.vercel\.app$',
+]
+
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
