@@ -2,11 +2,11 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import '../../styles/dashboard.css';
 
 const ALUMNI = [
-  { id: 1, firstName: 'Sarah',  lastName: 'Chen',     email: 'sarah.chen@gmail.com',    company: 'Goldman Sachs',   industry: 'Investment Banking', yearsOfExperience: 8 },
-  { id: 2, firstName: 'Marcus', lastName: 'Williams', email: 'marcus.williams@gmail.com', company: 'McKinsey & Co.', industry: 'Consulting',         yearsOfExperience: 5 },
-  { id: 3, firstName: 'Priya',  lastName: 'Patel',    email: 'priya.patel@gmail.com',    company: 'Morgan Stanley',  industry: 'Investment Banking', yearsOfExperience: 11 },
-  { id: 4, firstName: 'James',  lastName: 'O\'Brien', email: 'james.obrien@gmail.com',   company: 'Bain & Company',  industry: 'Consulting',         yearsOfExperience: 3 },
-  { id: 5, firstName: 'Aisha',  lastName: 'Johnson',  email: 'aisha.johnson@gmail.com',  company: 'JP Morgan Chase', industry: 'Investment Banking', yearsOfExperience: 7 },
+  { id: 1, firstName: 'Alex',  lastName: 'Temnorod',     email: 'alex.temnorod@gmail.com',    company: 'Goldman Sachs',   industry: 'Investment Banking', yearsOfExperience: 8 },
+  { id: 2, firstName: 'Eliska', lastName: 'Svobodova', email: 'eliska.svobodova@gmail.com', company: 'McKinsey & Co.', industry: 'Consulting',         yearsOfExperience: 5 },
+  { id: 3, firstName: 'Barbora',  lastName: 'Krenkova',    email: 'barbora.krenkova@gmail.com',    company: 'Morgan Stanley',  industry: 'Investment Banking', yearsOfExperience: 11 },
+  { id: 4, firstName: 'Hanna',  lastName: 'Pohl', email: 'hanna.pohl@gmail.com',   company: 'Bain & Company',  industry: 'Consulting',         yearsOfExperience: 3 },
+  { id: 5, firstName: 'Kian',  lastName: 'Flynn',  email: 'kian.flynn@gmail.com',  company: 'JP Morgan Chase', industry: 'Investment Banking', yearsOfExperience: 7 },
 ];
 
 function industryStyle(industry) {
