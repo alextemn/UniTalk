@@ -161,45 +161,48 @@ function AnswerCard({ ans }) {
 }
 
 function StudentCVView({ studentId }) {
-  const [cv, setCV]         = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [cv, setCv]     = useState(undefined);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     api.get(`/faculty/student/${studentId}/cv/`)
-      .then(({ data }) => setCV(data))
-      .catch(() => setCV({ experiences: [] }))
-      .finally(() => setLoading(false));
+      .then(({ data }) => setCv(data))
+      .catch(() => setCv(null));
   }, [studentId]);
 
-  if (loading) return <p className="fac-empty">Loading CV…</p>;
-
-  if (!cv || cv.experiences.length === 0) {
-    return <p className="fac-empty">This student hasn't added any CV experiences yet.</p>;
+  async function handleView() {
+    setError('');
+    try {
+      const res = await api.get(`/faculty/student/${studentId}/cv/pdf/`, { responseType: 'blob' });
+      const url = URL.createObjectURL(res.data);
+      window.open(url, '_blank');
+    } catch {
+      setError('Failed to open PDF.');
+    }
   }
 
+  if (cv === undefined) return <p className="fac-empty">Loading CV…</p>;
+  if (!cv) return <p className="fac-empty">This student hasn't uploaded a CV yet.</p>;
+
   return (
-    <div className="cv-exp-list" style={{ marginTop: '1rem' }}>
-      {cv.experiences.map((exp) => (
-        <div key={exp.id} className="cv-exp-card">
-          <div className="cv-exp-info" style={{ marginBottom: exp.bullets.length ? '0.75rem' : 0 }}>
-            <p className="cv-exp-title">{exp.title}</p>
-            <p className="cv-exp-company">{exp.company}</p>
-            <p className="cv-exp-dates">
-              {exp.start_date} — {exp.is_current ? 'Present' : exp.end_date || '—'}
+    <div style={{ marginTop: '1rem' }}>
+      <div className="cv-uploaded-card">
+        <div className="cv-uploaded-info">
+          <span className="cv-file-icon">PDF</span>
+          <div>
+            <p className="cv-uploaded-name">{cv.filename}</p>
+            <p className="cv-uploaded-date">
+              Uploaded {new Date(cv.uploaded_at).toLocaleDateString('en-US', {
+                month: 'long', day: 'numeric', year: 'numeric',
+              })}
             </p>
           </div>
-          {exp.bullets.length > 0 && (
-            <ul className="cv-bullets">
-              {exp.bullets.map((b) => (
-                <li key={b.id} className="cv-bullet-row">
-                  <span className="cv-bullet-dot">•</span>
-                  <span className="cv-bullet-text">{b.text}</span>
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
-      ))}
+        <div className="cv-uploaded-actions">
+          <button className="btn-primary" onClick={handleView}>View PDF</button>
+        </div>
+        {error && <p className="fac-empty" style={{ marginTop: '0.5rem' }}>{error}</p>}
+      </div>
     </div>
   );
 }

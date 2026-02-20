@@ -15,11 +15,9 @@ from .views import (
     PerformanceBySubcategoryView,
     FacultyAnalyticsView,
     StudentCVView,
-    ExperienceView,
-    ExperienceDetailView,
-    BulletView,
-    BulletDetailView,
+    StudentCVDownloadView,
     FacultyStudentCVView,
+    FacultyStudentCVDownloadView,
 )
 
 urlpatterns = [
@@ -38,9 +36,7 @@ urlpatterns = [
     path('appointments/', AppointmentCreateView.as_view()),
     path('appointments/<int:pk>/status/', AppointmentStatusUpdateView.as_view()),
     path('student/cv/', StudentCVView.as_view()),
-    path('student/cv/experiences/', ExperienceView.as_view()),
-    path('student/cv/experiences/<int:pk>/', ExperienceDetailView.as_view()),
-    path('student/cv/experiences/<int:exp_pk>/bullets/', BulletView.as_view()),
-    path('student/cv/experiences/<int:exp_pk>/bullets/<int:pk>/', BulletDetailView.as_view()),
+    path('student/cv/pdf/', StudentCVDownloadView.as_view()),
     path('faculty/student/<int:student_id>/cv/', FacultyStudentCVView.as_view()),
+    path('faculty/student/<int:student_id>/cv/pdf/', FacultyStudentCVDownloadView.as_view()),
 ]

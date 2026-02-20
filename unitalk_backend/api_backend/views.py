@@ -6,10 +6,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from django.db.models import Avg, Count
 from django.utils import timezone
+from django.http import HttpResponse
 from datetime import timedelta
 from collections import defaultdict
 
-from .models import QuestionModel, AnswerModel, Appointment, CV, Experience, Bullet
+from .models import QuestionModel, AnswerModel, Appointment, CV
 from .serializers import (
     QuestionSerializer,
     AnswerSerializer,
@@ -20,8 +21,6 @@ from .serializers import (
     FacultyAppointmentListSerializer,
     StudentAppointmentSerializer,
     CVSerializer,
-    ExperienceSerializer,
-    BulletSerializer,
 )
 from .openai_service import evaluate_answer
 
@@ -332,79 +331,42 @@ class StudentCVView(APIView):
 
     def get(self, request):
         if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
-        cv, _ = CV.objects.get_or_create(student=request.user)
-        return Response(CVSerializer(cv).data)
-
-
-class ExperienceView(APIView):
-    permission_classes = [IsAuthenticated]
+            return Response({'detail': 'Students only.'}, status=status.HTTP_403_FORBIDDEN)
+        try:
+            cv = CV.objects.get(student=request.user)
+            return Response(CVSerializer(cv).data)
+        except CV.DoesNotExist:
+            return Response(None)
 
     def post(self, request):
         if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': 'Students only.'}, status=status.HTTP_403_FORBIDDEN)
+        pdf_file = request.FILES.get('pdf')
+        if not pdf_file:
+            return Response({'error': 'No PDF provided.'}, status=status.HTTP_400_BAD_REQUEST)
         cv, _ = CV.objects.get_or_create(student=request.user)
-        serializer = ExperienceSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        serializer.save(cv=cv)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        cv.pdf_data = pdf_file.read()
+        cv.filename = pdf_file.name
+        cv.save()
+        return Response(CVSerializer(cv).data, status=status.HTTP_201_CREATED)
 
-
-class ExperienceDetailView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def patch(self, request, pk):
+    def delete(self, request):
         if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
-        experience = get_object_or_404(Experience, pk=pk, cv__student=request.user)
-        serializer = ExperienceSerializer(experience, data=request.data, partial=True)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        serializer.save()
-        return Response(serializer.data)
-
-    def delete(self, request, pk):
-        if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
-        experience = get_object_or_404(Experience, pk=pk, cv__student=request.user)
-        experience.delete()
+            return Response({'detail': 'Students only.'}, status=status.HTTP_403_FORBIDDEN)
+        CV.objects.filter(student=request.user).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class BulletView(APIView):
+class StudentCVDownloadView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, exp_pk):
+    def get(self, request):
         if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
-        experience = get_object_or_404(Experience, pk=exp_pk, cv__student=request.user)
-        serializer = BulletSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        serializer.save(experience=experience)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class BulletDetailView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def patch(self, request, exp_pk, pk):
-        if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
-        bullet = get_object_or_404(Bullet, pk=pk, experience__pk=exp_pk, experience__cv__student=request.user)
-        serializer = BulletSerializer(bullet, data=request.data, partial=True)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        serializer.save()
-        return Response(serializer.data)
-
-    def delete(self, request, exp_pk, pk):
-        if not request.user.is_student:
-            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
-        bullet = get_object_or_404(Bullet, pk=pk, experience__pk=exp_pk, experience__cv__student=request.user)
-        bullet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response({'detail': 'Students only.'}, status=status.HTTP_403_FORBIDDEN)
+        cv = get_object_or_404(CV, student=request.user)
+        response = HttpResponse(bytes(cv.pdf_data), content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="{cv.filename}"'
+        return response
 
 
 class FacultyStudentCVView(APIView):
@@ -412,17 +374,36 @@ class FacultyStudentCVView(APIView):
 
     def get(self, request, student_id):
         if not request.user.is_faculty:
-            return Response({'detail': 'Only faculty can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': 'Faculty only.'}, status=status.HTTP_403_FORBIDDEN)
         has_appointment = Appointment.objects.filter(
             faculty=request.user,
             student__id=student_id,
         ).exists()
         if not has_appointment:
             return Response({'detail': 'No appointment found with this student.'}, status=status.HTTP_403_FORBIDDEN)
-        User = get_user_model()
-        student = get_object_or_404(User, pk=student_id, user_type='student')
-        cv, _ = CV.objects.get_or_create(student=student)
-        return Response(CVSerializer(cv).data)
+        try:
+            cv = CV.objects.get(student__id=student_id)
+            return Response(CVSerializer(cv).data)
+        except CV.DoesNotExist:
+            return Response(None)
+
+
+class FacultyStudentCVDownloadView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, student_id):
+        if not request.user.is_faculty:
+            return Response({'detail': 'Faculty only.'}, status=status.HTTP_403_FORBIDDEN)
+        has_appointment = Appointment.objects.filter(
+            faculty=request.user,
+            student__id=student_id,
+        ).exists()
+        if not has_appointment:
+            return Response({'detail': 'No appointment found with this student.'}, status=status.HTTP_403_FORBIDDEN)
+        cv = get_object_or_404(CV, student__id=student_id)
+        response = HttpResponse(bytes(cv.pdf_data), content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="{cv.filename}"'
+        return response
 
 
 class FacultyStudentAnswersView(APIView):
