@@ -165,6 +165,8 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://localhost:5173',
+    'https://uni-talk-tau.vercel.app',
 ]
 
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
