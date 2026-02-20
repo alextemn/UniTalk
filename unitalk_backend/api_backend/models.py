@@ -73,6 +73,48 @@ class AnswerModel(models.Model):
         verbose_name_plural = 'Answers'
 
 
+class CV(models.Model):
+    student = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='cv',
+        limit_choices_to={'user_type': 'student'},
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'CV — {self.student.username}'
+
+
+class Experience(models.Model):
+    cv = models.ForeignKey(CV, on_delete=models.CASCADE, related_name='experiences')
+    title = models.CharField(max_length=200)
+    company = models.CharField(max_length=200)
+    start_date = models.CharField(max_length=50)
+    end_date = models.CharField(max_length=50, blank=True, default='')
+    is_current = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.title} @ {self.company}'
+
+
+class Bullet(models.Model):
+    experience = models.ForeignKey(Experience, on_delete=models.CASCADE, related_name='bullets')
+    text = models.CharField(max_length=500)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.text
+
+
 class Appointment(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import QuestionModel, AnswerModel, Appointment
+from .models import QuestionModel, AnswerModel, Appointment, CV, Experience, Bullet
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -87,6 +87,31 @@ class AnswerWithQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnswerModel
         fields = ['id', 'question', 'answer', 'strengths', 'weaknesses', 'score', 'created_at']
+
+
+class BulletSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bullet
+        fields = ['id', 'text', 'order']
+
+
+class ExperienceSerializer(serializers.ModelSerializer):
+    bullets = BulletSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Experience
+        fields = ['id', 'title', 'company', 'start_date', 'end_date', 'is_current', 'bullets', 'created_at']
+        read_only_fields = ['created_at']
+
+
+class CVSerializer(serializers.ModelSerializer):
+    experiences = ExperienceSerializer(many=True, read_only=True)
+    student = UserSerializer(read_only=True)
+
+    class Meta:
+        model = CV
+        fields = ['id', 'student', 'experiences', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at']
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):

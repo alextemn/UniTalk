@@ -9,7 +9,7 @@ from django.utils import timezone
 from datetime import timedelta
 from collections import defaultdict
 
-from .models import QuestionModel, AnswerModel, Appointment
+from .models import QuestionModel, AnswerModel, Appointment, CV, Experience, Bullet
 from .serializers import (
     QuestionSerializer,
     AnswerSerializer,
@@ -19,6 +19,9 @@ from .serializers import (
     AppointmentSerializer,
     FacultyAppointmentListSerializer,
     StudentAppointmentSerializer,
+    CVSerializer,
+    ExperienceSerializer,
+    BulletSerializer,
 )
 from .openai_service import evaluate_answer
 
@@ -322,6 +325,104 @@ class AppointmentStatusUpdateView(APIView):
         appointment.status = new_status
         appointment.save()
         return Response(FacultyAppointmentListSerializer(appointment).data)
+
+
+class StudentCVView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        cv, _ = CV.objects.get_or_create(student=request.user)
+        return Response(CVSerializer(cv).data)
+
+
+class ExperienceView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        cv, _ = CV.objects.get_or_create(student=request.user)
+        serializer = ExperienceSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save(cv=cv)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ExperienceDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        experience = get_object_or_404(Experience, pk=pk, cv__student=request.user)
+        serializer = ExperienceSerializer(experience, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        experience = get_object_or_404(Experience, pk=pk, cv__student=request.user)
+        experience.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class BulletView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, exp_pk):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        experience = get_object_or_404(Experience, pk=exp_pk, cv__student=request.user)
+        serializer = BulletSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save(experience=experience)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class BulletDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, exp_pk, pk):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        bullet = get_object_or_404(Bullet, pk=pk, experience__pk=exp_pk, experience__cv__student=request.user)
+        serializer = BulletSerializer(bullet, data=request.data, partial=True)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data)
+
+    def delete(self, request, exp_pk, pk):
+        if not request.user.is_student:
+            return Response({'detail': 'Only students can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        bullet = get_object_or_404(Bullet, pk=pk, experience__pk=exp_pk, experience__cv__student=request.user)
+        bullet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class FacultyStudentCVView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, student_id):
+        if not request.user.is_faculty:
+            return Response({'detail': 'Only faculty can access this endpoint.'}, status=status.HTTP_403_FORBIDDEN)
+        has_appointment = Appointment.objects.filter(
+            faculty=request.user,
+            student__id=student_id,
+        ).exists()
+        if not has_appointment:
+            return Response({'detail': 'No appointment found with this student.'}, status=status.HTTP_403_FORBIDDEN)
+        User = get_user_model()
+        student = get_object_or_404(User, pk=student_id, user_type='student')
+        cv, _ = CV.objects.get_or_create(student=student)
+        return Response(CVSerializer(cv).data)
 
 
 class FacultyStudentAnswersView(APIView):
