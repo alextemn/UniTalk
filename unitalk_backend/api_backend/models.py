@@ -80,7 +80,7 @@ class CV(models.Model):
         related_name='cv',
         limit_choices_to={'user_type': 'student'},
     )
-    pdf_data = models.BinaryField()
+    pdf_base64 = models.TextField(blank=True, default='')
     filename = models.CharField(max_length=255, default='cv.pdf')
     uploaded_at = models.DateTimeField(auto_now=True)
 

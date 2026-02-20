@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Avg, Count
 from django.utils import timezone
 from django.http import HttpResponse
+import base64
 from datetime import timedelta
 from collections import defaultdict
 
@@ -333,7 +334,7 @@ class StudentCVView(APIView):
         if not request.user.is_student:
             return Response({'detail': 'Students only.'}, status=status.HTTP_403_FORBIDDEN)
         try:
-            cv = CV.objects.get(student=request.user)
+            cv = CV.objects.get(student=request.user, pdf_base64__gt='')
             return Response(CVSerializer(cv).data)
         except CV.DoesNotExist:
             return Response(None)
@@ -345,7 +346,7 @@ class StudentCVView(APIView):
         if not pdf_file:
             return Response({'error': 'No PDF provided.'}, status=status.HTTP_400_BAD_REQUEST)
         cv, _ = CV.objects.get_or_create(student=request.user)
-        cv.pdf_data = pdf_file.read()
+        cv.pdf_base64 = base64.b64encode(pdf_file.read()).decode('utf-8')
         cv.filename = pdf_file.name
         cv.save()
         return Response(CVSerializer(cv).data, status=status.HTTP_201_CREATED)
@@ -364,7 +365,8 @@ class StudentCVDownloadView(APIView):
         if not request.user.is_student:
             return Response({'detail': 'Students only.'}, status=status.HTTP_403_FORBIDDEN)
         cv = get_object_or_404(CV, student=request.user)
-        response = HttpResponse(bytes(cv.pdf_data), content_type='application/pdf')
+        pdf_bytes = base64.b64decode(cv.pdf_base64)
+        response = HttpResponse(pdf_bytes, content_type='application/pdf')
         response['Content-Disposition'] = f'inline; filename="{cv.filename}"'
         return response
 
@@ -382,7 +384,7 @@ class FacultyStudentCVView(APIView):
         if not has_appointment:
             return Response({'detail': 'No appointment found with this student.'}, status=status.HTTP_403_FORBIDDEN)
         try:
-            cv = CV.objects.get(student__id=student_id)
+            cv = CV.objects.get(student__id=student_id, pdf_base64__gt='')
             return Response(CVSerializer(cv).data)
         except CV.DoesNotExist:
             return Response(None)
@@ -401,7 +403,8 @@ class FacultyStudentCVDownloadView(APIView):
         if not has_appointment:
             return Response({'detail': 'No appointment found with this student.'}, status=status.HTTP_403_FORBIDDEN)
         cv = get_object_or_404(CV, student__id=student_id)
-        response = HttpResponse(bytes(cv.pdf_data), content_type='application/pdf')
+        pdf_bytes = base64.b64decode(cv.pdf_base64)
+        response = HttpResponse(pdf_bytes, content_type='application/pdf')
         response['Content-Disposition'] = f'inline; filename="{cv.filename}"'
         return response
 
