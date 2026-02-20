@@ -55,6 +55,7 @@ class AnswerModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     strengths = models.JSONField(default=list, help_text='List of strength items')
     weaknesses = models.JSONField(default=list, help_text='List of weakness items')
+    score = models.IntegerField(null=True, blank=True, help_text='AI-evaluated score 0–100')
     student = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
