@@ -21,10 +21,20 @@ export default function Sidebar() {
     navigate('/', { replace: true });
   }
 
+  function handleLogoClick() {
+    navigate('/student/dashboard');
+  }
+
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <h1 className="sidebar-logo">PitchPerfect</h1>
+        <img 
+          src="/unitalk-logo.png" 
+          alt="UniTalk Logo" 
+          className="sidebar-logo-img"
+          onClick={handleLogoClick}
+          style={{ cursor: 'pointer' }}
+        />
         <p className="sidebar-subtitle">Student Portal</p>
       </div>
       
