@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://unitalk-1.onrender.com/api_backend';
+const API_URL = 'https://unitalk-1.onrender.com/api_backend';
 
 const api = axios.create({
   baseURL: API_URL,
