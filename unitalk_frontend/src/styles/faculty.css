@@ -525,6 +525,37 @@
   font-weight: 700;
 }
 
+/* ── Tabs ────────────────────────────────────────────────────── */
+.fac-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1.5rem 0 1rem;
+  border-bottom: 2px solid #E2E8F0;
+  padding-bottom: 0;
+}
+
+.fac-tab {
+  padding: 0.5rem 1.25rem;
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #64748B;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.fac-tab:hover {
+  color: #1E293B;
+}
+
+.fac-tab.fac-tab-active {
+  color: #6366F1;
+  border-bottom-color: #6366F1;
+}
+
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 860px) {
   .fac-body {

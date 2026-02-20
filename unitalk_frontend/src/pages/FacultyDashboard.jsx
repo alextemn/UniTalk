@@ -160,11 +160,56 @@ function AnswerCard({ ans }) {
   );
 }
 
+function StudentCVView({ studentId }) {
+  const [cv, setCV]         = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get(`/faculty/student/${studentId}/cv/`)
+      .then(({ data }) => setCV(data))
+      .catch(() => setCV({ experiences: [] }))
+      .finally(() => setLoading(false));
+  }, [studentId]);
+
+  if (loading) return <p className="fac-empty">Loading CV…</p>;
+
+  if (!cv || cv.experiences.length === 0) {
+    return <p className="fac-empty">This student hasn't added any CV experiences yet.</p>;
+  }
+
+  return (
+    <div className="cv-exp-list" style={{ marginTop: '1rem' }}>
+      {cv.experiences.map((exp) => (
+        <div key={exp.id} className="cv-exp-card">
+          <div className="cv-exp-info" style={{ marginBottom: exp.bullets.length ? '0.75rem' : 0 }}>
+            <p className="cv-exp-title">{exp.title}</p>
+            <p className="cv-exp-company">{exp.company}</p>
+            <p className="cv-exp-dates">
+              {exp.start_date} — {exp.is_current ? 'Present' : exp.end_date || '—'}
+            </p>
+          </div>
+          {exp.bullets.length > 0 && (
+            <ul className="cv-bullets">
+              {exp.bullets.map((b) => (
+                <li key={b.id} className="cv-bullet-row">
+                  <span className="cv-bullet-dot">•</span>
+                  <span className="cv-bullet-text">{b.text}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function StudentDetailView({ appt, onBack, onStatusUpdate, updating }) {
   const [answers, setAnswers]     = useState([]);
   const [loading, setLoading]     = useState(true);
   const [filterCat, setFilterCat] = useState('All');
   const [filterSub, setFilterSub] = useState('All');
+  const [activeTab, setActiveTab] = useState('performance');
 
   useEffect(() => {
     api.get(`/faculty/student/${appt.student.id}/answers/`)
@@ -233,8 +278,26 @@ function StudentDetailView({ appt, onBack, onStatusUpdate, updating }) {
         </div>
       )}
 
+      {/* Tabs */}
+      <div className="fac-tabs">
+        <button
+          className={`fac-tab ${activeTab === 'performance' ? 'fac-tab-active' : ''}`}
+          onClick={() => setActiveTab('performance')}
+        >
+          Performance
+        </button>
+        <button
+          className={`fac-tab ${activeTab === 'cv' ? 'fac-tab-active' : ''}`}
+          onClick={() => setActiveTab('cv')}
+        >
+          CV
+        </button>
+      </div>
+
+      {activeTab === 'cv' && <StudentCVView studentId={appt.student.id} />}
+
       {/* Filters */}
-      {!loading && answers.length > 0 && (
+      {activeTab === 'performance' && !loading && answers.length > 0 && (
         <div className="fac-filters">
           <select className="fac-filter-select" value={filterCat} onChange={(e) => handleCatChange(e.target.value)}>
             {allCats.map((c) => <option key={c} value={c}>{c === 'All' ? 'All categories' : c}</option>)}
@@ -249,30 +312,32 @@ function StudentDetailView({ appt, onBack, onStatusUpdate, updating }) {
       )}
 
       {/* Score chart */}
-      <div className="fac-card" style={{ marginBottom: '1.5rem' }}>
-        <div className="fac-card-header">
-          <h2>Scores by Question Type</h2>
-          <p className="fac-card-sub">Average across {appt.student?.username}'s submissions</p>
-        </div>
+      {activeTab === 'performance' && (
+        <div className="fac-card" style={{ marginBottom: '1.5rem' }}>
+          <div className="fac-card-header">
+            <h2>Scores by Question Type</h2>
+            <p className="fac-card-sub">Average across {appt.student?.username}'s submissions</p>
+          </div>
 
-        {loading ? (
-          <p className="fac-empty">Loading…</p>
-        ) : !hasData ? (
-          <p className="fac-empty">No scored answers yet.</p>
-        ) : (
-          <>
-            <ChartSection title="By subcategory" items={stats.by_subcategory} keyName="subcategory" colorMap={SUBCAT_COLORS} />
-            <ChartSection title="By category"    items={stats.by_category}    keyName="category"    colorMap={CAT_COLORS} />
-            <ChartSection title="By difficulty"  items={stats.by_difficulty}  keyName="difficulty"  colorMap={DIFF_COLORS} />
-            <p className="fac-chart-note">
-              Score out of 100 — Content Accuracy (30) + Depth (25) + Structure (25) + Communication (20)
-            </p>
-          </>
-        )}
-      </div>
+          {loading ? (
+            <p className="fac-empty">Loading…</p>
+          ) : !hasData ? (
+            <p className="fac-empty">No scored answers yet.</p>
+          ) : (
+            <>
+              <ChartSection title="By subcategory" items={stats.by_subcategory} keyName="subcategory" colorMap={SUBCAT_COLORS} />
+              <ChartSection title="By category"    items={stats.by_category}    keyName="category"    colorMap={CAT_COLORS} />
+              <ChartSection title="By difficulty"  items={stats.by_difficulty}  keyName="difficulty"  colorMap={DIFF_COLORS} />
+              <p className="fac-chart-note">
+                Score out of 100 — Content Accuracy (30) + Depth (25) + Structure (25) + Communication (20)
+              </p>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Answer list */}
-      {!loading && (
+      {activeTab === 'performance' && !loading && (
         <div className="fac-card">
           <div className="fac-card-header">
             <h2>Practice Answers</h2>
